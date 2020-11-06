@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import playerNumForm, NameForm
+from .functions import *
 
 
 def index(request):
@@ -25,12 +26,20 @@ def index(request):
 def get_name(request):
     forms = [NameForm() for i in range(PLAYER_NUM)]
     if request.method == 'POST': # if this is a POST request we need to process the form data
-        PLAYERS = request.POST.getlist("field")
-        print(PLAYERS)
+        plyers_name = request.POST.getlist("field")
 
-        return HttpResponseRedirect('/names')  # Redirect after POST
+        print(plyers_name)
+        global playerObjects
+        playerObjects = setupplayer(plyers_name)
+
+        return HttpResponseRedirect('/main')  # Redirect after POST
 
     return render(request, 'names.html', {'forms':forms})
+
+def main(request):
+
+
+    return render(request, 'main.html', {'players':playerObjects})
 
 
 
