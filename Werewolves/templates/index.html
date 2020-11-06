@@ -5,12 +5,12 @@
     <h1>Werewolfs of Miller's Hollow</h1>
     <p>Welcome to the game!</p>
 
-    <form action="#">
-    <label for="fname">Number of players: </label>
-    <input type="text" id="fname" name="fname"><br><br>
-
-    <input type="submit" value="Submit">
+    <form method="post"> <!-- action = 'sth from the urls.py, where it redirects # action="/names"-->
+        {% csrf_token %}
+        {{ form1 }}
+        <input type="submit" value="Submit">
     </form>
+
 </body>
 
 </html>

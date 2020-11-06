@@ -20,4 +20,5 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index), # start has to be name of the function
+    path('names', views.get_name)
 ]
