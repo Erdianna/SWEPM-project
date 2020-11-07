@@ -6,4 +6,16 @@ class playerNumForm(forms.Form):
 class NameForm(forms.Form):
     field = forms.CharField(label='', max_length=100)
 
-#forms = [Foo(prefix=i) for i in range(5)]
+FRUIT_CHOICES= [
+    ('villager', 'Villager'),
+    ('hunter', 'Hunter'),
+    ('seer', 'Seer'),
+    ('cupido', 'Cupido'),
+    ('werewolf', 'Werewolf'),
+    ]
+#FRUIT_CHOICES= ['', 'Villager', 'Seer', 'Cupido', 'Hunter']
+
+class RoleForm(forms.Form):
+    role = forms.CharField(label='Choose role', widget=forms.Select(choices=FRUIT_CHOICES))
+
+

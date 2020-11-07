@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .forms import playerNumForm, NameForm
+from .forms import *
 from .functions import *
 
 
@@ -29,17 +29,42 @@ def get_name(request):
         plyers_name = request.POST.getlist("field")
 
         print(plyers_name)
-        global playerObjects
-        playerObjects = setupplayer(plyers_name)
+        global P
+        P = setupplayer(plyers_name)
 
         return HttpResponseRedirect('/main')  # Redirect after POST
 
     return render(request, 'names.html', {'forms':forms})
 
+roles = []
 def main(request):
+    players = P #these are objects
+    role = RoleForm()
+    if request.method == 'POST':
+
+        # for p in players:
+        #     if p.name in request.POST:
+        #print(request.POST)
+
+        # if request.POST.get("choose_role"):
+        # #if 'choose_role' in request.POST: # chooserole is naem
+        #
+        answer = request.POST.get("role")
+        print(answer)
+        roles.append(answer)
+    print(players) # list of the player objects
+    print(roles) # list of the selected roles
+
+    return render(request, 'main.html', {'players':players, 'role': role})
+
+def scratch(request):
+    players = [p.name for p in P]
+    dictionary = dict(zip(players, roles))
+    print(dictionary)
+
+    return render(request, 'scratch.html')
 
 
-    return render(request, 'main.html', {'players':playerObjects})
 
 
 

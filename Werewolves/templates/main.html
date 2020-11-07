@@ -1,64 +1,95 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
 
-<style>
+    <style>
 
-.container {
-  --d: 6.5em; /* image size */
-  --rel: 1; /* how much extra space we want between images, 1 = one image size */
-  --r: calc(.5*(1 + var(--rel))*var(--d)/var(--tan)); /* circle radius */
-  --s: calc(2*var(--r) + var(--d)); /* container size */
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--s); height: var(--s);
-  /* background: silver to show images perfectly fit in container */
-}
+    .container {
+      --d: 6.5em; /* image size */
+      --rel: 1; /* how much extra space we want between images, 1 = one image size */
+      --r: calc(.5*(1 + var(--rel))*var(--d)/var(--tan)); /* circle radius */
+      --s: calc(2*var(--r) + var(--d)); /* container size */
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--s); height: var(--s);
+      /* background: silver to show images perfectly fit in container */
+    }
 
-.container a {
-  position: absolute;
-  top: 50%; left: 50%;
-  margin: calc(-.5*var(--d));
-  width: var(--d); height: var(--d);
-  --az: calc(var(--i)*1turn/var(--m));
-  transform:
-    rotate(var(--az))
-    translate(var(--r))
-    rotate(calc(-1*var(--az)))
-}
+    .container a {
+      position: absolute;
+      top: 50%; left: 50%;
+      margin: calc(-.5*var(--d));
+      width: var(--d); height: var(--d);
+      --az: calc(var(--i)*1turn/var(--m));
+      transform:
+        rotate(var(--az))
+        translate(var(--r))
+        rotate(calc(-1*var(--az)))
+    }
 
 
-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-}
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+    }
 
-</style>
+    </style>
+
+</head>
+
 
 <body style="text-align: center;">
     <h1>Werewolfs of Miller's Hollow</h1>
-    <p>Please assign the roles</p>
+    <p>Please assign the roles (start at top and go clockwise)</p>
+
+    <!-- Popup dialog to choose the roles -->
+    <div id="dialog" title="Basic dialog">
+        <form method="post">
+        {% csrf_token %}
+            {{role}}
+            <input type="submit" value="Ok" name="choose_role" />
+        </form>
+    </div>
 
 
+    <!-- These are the players in the round -->
     <div class="container" style="--m: 8; --tan: 0.41">
 
     {% for p in players %}
         <a style="--i:{{ forloop.counter }}">
-            <button type="button" onclick="alert('hello {{ p.name }}')" style="border-radius: 50%;"> {{ p.name }} </button>
+            <button type="submit" class="target1" name={{p.name}} value="click" style="border-radius: 50%;"> {{ p.name }} </button>
         </a>
     {% endfor %}
 
     </div>
 
+<!--------------- Popup window with a dropdown list --------------->
 
+<script>
+    $('#dialog').hide();
+    $('.target1').click(function() {
+        $('#dialog').show();
+        $('#dialog').dialog();
+    });
+</script>
+<!---------------------------------------------------------------->
+
+
+
+<a href="{% url 'scratch' %}">
 <button type="button" onclick="" style="position:absolute;right:0;bottom:0;background-color:orange;">Next</button>
+</a>
 
 </body>
 
