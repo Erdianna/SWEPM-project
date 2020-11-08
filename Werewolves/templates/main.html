@@ -58,7 +58,7 @@
         <form method="post">
         {% csrf_token %}
             {{role}}
-            <input type="submit" value="Ok" name="choose_role" />
+            <input type="submit" id="send-to-django-button" value="Ok" name="choose_role" />
         </form>
     </div>
 
@@ -68,12 +68,20 @@
 
     {% for p in players %}
         <a style="--i:{{ forloop.counter }}">
-            <button type="submit" class="target1" name={{p.name}} value="click" style="border-radius: 50%;"> {{ p.name }} </button>
+            <button type="button" class="target1" id={{p.name}} onClick="reply_click(this.id)" value="click" style="border-radius: 50%;"> {{ p.name }} </button>
         </a>
     {% endfor %}
 
     </div>
 
+<script type="text/javascript">
+  function reply_click(clicked_id) {
+      var clicked_player = clicked_id
+      var x = document.getElementById("dialog");
+      x.title = clicked_player;
+      //alert(clicked_id);
+  }
+</script>
 <!--------------- Popup window with a dropdown list --------------->
 
 <script>
@@ -84,12 +92,30 @@
     });
 </script>
 <!---------------------------------------------------------------->
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var url = "a kuarva anyadat fsdsdfmukodj";
+        $("#send-to-django-button").click(function() {
+            $.ajax({
+                url: "/main",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    url: url,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+            });
+        });
+    });
+</script>
 
 
 <a href="{% url 'scratch' %}">
 <button type="button" onclick="" style="position:absolute;right:0;bottom:0;background-color:orange;">Next</button>
 </a>
+
+
+
 
 </body>
 

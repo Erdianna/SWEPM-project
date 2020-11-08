@@ -36,11 +36,14 @@ def get_name(request):
 
     return render(request, 'names.html', {'forms':forms})
 
+
 roles = []
 def main(request):
-    players = P #these are objects
+    players = P  # these are objects
     role = RoleForm()
     if request.method == 'POST':
+        url = request.POST.get('url')
+        print(url)
 
         # for p in players:
         #     if p.name in request.POST:
@@ -52,8 +55,8 @@ def main(request):
         answer = request.POST.get("role")
         print(answer)
         roles.append(answer)
-    print(players) # list of the player objects
-    print(roles) # list of the selected roles
+    #print(players) # list of the player objects
+    #print(roles) # list of the selected roles
 
     return render(request, 'main.html', {'players':players, 'role': role})
 
@@ -64,6 +67,9 @@ def scratch(request):
 
     return render(request, 'scratch.html')
 
+def process_url_from_client(request):
+    url = request.POST.get('url')
+    print(url)
 
 
 
