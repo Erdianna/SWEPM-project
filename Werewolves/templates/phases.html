@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+
+{#    <script src="functions.js"></script>#}
+
+    <style>
+
+    .container {
+      --d: 6.5em; /* image size */
+      --rel: 1; /* how much extra space we want between images, 1 = one image size */
+      --r: calc(.5*(1 + var(--rel))*var(--d)/var(--tan)); /* circle radius */
+      --s: calc(2*var(--r) + var(--d)); /* container size */
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--s); height: var(--s);
+      /* background: silver to show images perfectly fit in container */
+    }
+
+    .container a {
+      position: absolute;
+      top: 50%; left: 50%;
+      margin: calc(-.5*var(--d));
+      width: var(--d); height: var(--d);
+      --az: calc(var(--i)*1turn/var(--m));
+      transform:
+        rotate(var(--az))
+        translate(var(--r))
+        rotate(calc(-1*var(--az)))
+    }
+
+
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+    }
+
+    </style>
+
+</head>
+
+
+<body style="text-align: center;">
+    <h1 id="text1" >Werewolfs of Miller's Hollow</h1>
+    <p id="text2" >Please assign the roles (start at top and go clockwise)</p>
+
+    <button id="KP" onclick="WitchKill()">Kill postion</button> <!-- hide by default -->
+    <button id="SP" onclick="WitchSave()">Save postion</button> <!-- hide by default -->
+
+    <!-- These are the players in the round -->
+    <div class="container" style="--m: 8; --tan: 0.41">
+
+    {% for p in players %}
+        <a style="--i:{{ forloop.counter }}">
+            <button type="button" class="target1" id={{p.name}} onClick="reply_click(this.id)" value="click" style="border-radius: 50%;"> {{ p.name }} </button>
+        </a>
+    {% endfor %}
+
+    </div>
+
+
+
+<script type="text/javascript">
+$('#KP').hide();
+$('#SP').hide();
+
+
+
+  {#function reply_click(clicked_id) {#}
+  {#    var clicked_player = clicked_id // clicked_id is the name of the player#}
+  {#    //alert(clicked_id)#}
+  {##}
+  {#    //var x = document.getElementById("dialog");#}
+  {#    //x.title = clicked_player;#}
+  {#    //alert(clicked_id);#}
+
+
+
+
+// pass js data to python
+{#$(document).ready(function() {#}
+{#    var url = clicked_player;#}
+{#    $("#send-to-django-button").click(function() {#}
+{#        $.ajax({#}
+{#            url: "/main",#}
+{#            type: "POST",#}
+{#            dataType: "json",#}
+{#            data: {#}
+{#                url: url,#}
+{#                csrfmiddlewaretoken: '{{ csrf_token }}'#}
+{#                }#}
+{#        });#}
+{#    });#}
+
+
+{#werewolves=[];#}
+{#hunter=None;#}
+{#witch=None;#}
+{#fortuneteller=None;#}
+var x=1 /* phases -> 0:setup, 1:Cupid, 2:FT, 3:WW, 4:Witch, 5:Day */
+var setup=0
+function main(idplayer){ //behind the players buttons
+    if (x==0){
+        setupfunction(idplayer);
+    }else if (x==1){
+        Cupid(idplayer);
+    }else if (x==2){
+        FT(idplayer);
+    }else if (x==3){
+        WW(idplayer);
+    }else if (x==4){
+        Witch(idplayer);
+    }else if (x==5){
+        Day(idplayer);
+    }
+}
+function setupfunction(idplayer){
+    if (setup==1){
+        sCupid(idplayer);
+    }else if (setup==2){
+        sFT(idplayer);
+    }else if (setup==3){
+        sWW(idplayer);
+    }else if (setup==4){
+        sWitch(idplayer);
+    }
+}
+function phases(){ //behind next button
+    //alert('hello')
+    document.getElementById("text1").innerHTML="Cupid";
+    if (x==0){
+        if (setup<5){
+            setup+=1;
+        }else{
+            x+=1;
+        }
+    }else if (x==1){
+        document.getElementById("text1").innerHTML = "Cupid";
+        document.getElementById("text2").innerHTML = "Select the lovebirds";
+        x+=1;
+    }else if (x==2){
+        document.getElementById("text1").innerHTML = "Fortune Teller";
+        document.getElementById("text2").innerHTML = "Select the Identity you want to know";
+        x+=1;
+    }else if (x==3){
+        document.getElementById("text1").innerHTML = "Werewolves";
+        document.getElementById("text2").innerHTML = "Select the Victim";
+        x+=1;
+    }else if (x==4){
+        document.getElementById("text1").innerHTML = "Witch";
+        document.getElementById("text2").innerHTML = "Select the Potion or next";
+        x+=1;
+    }
+}
+{#function selectWerewolves(x){#}
+{#    werewolves.append(x);#}
+{#    $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/selectWW/",#}
+{#            data: {#}
+{#                "var1": "val1",#}
+{#                "csrfmiddlewaretoken":"{{ csrf_token }}",#}
+{#            },#}
+{#            dataType: 'json',#}
+{#            success: function(data) {#}
+{#            }#}
+{#        })#}
+
+</script>
+
+
+
+</body>
+
+</html>

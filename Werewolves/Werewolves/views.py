@@ -11,7 +11,7 @@ def index(request):
         if form1.is_valid():
             global PLAYER_NUM
             PLAYER_NUM = form1.cleaned_data['player_num']
-            print(form1.cleaned_data['player_num'])
+            #print(form1.cleaned_data['player_num'])
             # print(forms['field'].value())
             # print(forms.cleaned_data['field'])
 
@@ -20,7 +20,7 @@ def index(request):
     else: # if a GET (or any other method) we'll create a blank form
         form1 = playerNumForm()
 
-    return render(request, 'index.html', {'form1': form1})
+    return render(request, 'setup.html', {'form1': form1})
 
 
 def get_name(request):
@@ -37,39 +37,30 @@ def get_name(request):
     return render(request, 'names.html', {'forms':forms})
 
 
-roles = []
 def main(request):
     players = P  # these are objects
     role = RoleForm()
     if request.method == 'POST':
-        url = request.POST.get('url')
-        print(url)
+        if request.POST.get('url') is not None:
+            name = request.POST.get('url') # <-- NAME OF THE CHOOSEN VILLAGER
+            print(name)
+        if request.POST.get('role') is not None:
+            role = request.POST.get("role") # <-- ROLE OF THE CHOOSEN VILLAGER
+            print(role)
 
-        # for p in players:
-        #     if p.name in request.POST:
-        #print(request.POST)
+        #get_role(name, role)
 
-        # if request.POST.get("choose_role"):
-        # #if 'choose_role' in request.POST: # chooserole is naem
-        #
-        answer = request.POST.get("role")
-        print(answer)
-        roles.append(answer)
-    #print(players) # list of the player objects
-    #print(roles) # list of the selected roles
+        return HttpResponseRedirect('/main')
 
     return render(request, 'main.html', {'players':players, 'role': role})
 
-def scratch(request):
-    players = [p.name for p in P]
-    dictionary = dict(zip(players, roles))
-    print(dictionary)
 
-    return render(request, 'scratch.html')
 
-def process_url_from_client(request):
-    url = request.POST.get('url')
-    print(url)
+def phases(request):
+    players = P
+    return render(request, 'phases.html', {'players':players})
+
+
 
 
 

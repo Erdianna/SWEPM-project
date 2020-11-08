@@ -5,8 +5,7 @@
     <h1>Werewolfs of Miller's Hollow</h1>
     <p>Please enter the player names</p>
 
-    <form method="post"> <!-- action = 'sth from the urls.py, where it redirects -->
-        {% csrf_token %}
+    <form method="post"> <!-- action = 'sth from the urls.py, where it redirects -->{% csrf_token %}
 
         {% for x in forms %}
             {{ x }}

@@ -12,6 +12,7 @@ FRUIT_CHOICES= [
     ('seer', 'Seer'),
     ('cupido', 'Cupido'),
     ('werewolf', 'Werewolf'),
+    ('witch', 'Witch'),
     ]
 #FRUIT_CHOICES= ['', 'Villager', 'Seer', 'Cupido', 'Hunter']
 
