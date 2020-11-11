@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="werewolf.js"></script>
+    <script>var x = 0;var setup=1;</script>
+    <style>
+        .container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(auto-fill, 90px);
+        grid-row-gap: .5em;
+        grid-column-gap: 1em;
+        }
+        .item {
+            border-radius: 25px;
+            background:#AFA;
+            height:90px;
+        }
+        body{
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+    
+<body>
+
+    <h1 id="text1">Werewolfs of Miller's Hollow</h1>
+    <p id="text2">Welcome to the game!</p>
+
+    <button id="KP" onclick="WitchKill()">Kill postion</button> <!-- hide by default -->
+    <button id="SP" onclick="WitchSave()">Save postion</button> <!-- hide by default -->
+
+    <div id="app" class="container"></div>
+    
+    <button id="add_el">Add player</button>
+    
+    <template id="item_template">
+      <div id="{{ name_id }}" class="item" onclick="main(this.id)">
+        <p >{{ name }}</p>
+        <p>
+          <button class="del_el">Delete</button>
+        </p>
+      </div>
+    </template>
+
+    <button onclick="phases()" style="position:absolute;right:0;bottom:0;background-color:orange;">Next</button>
+
+
+</body>
+
+</html>
