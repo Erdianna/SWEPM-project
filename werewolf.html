@@ -33,8 +33,9 @@
     <h1 id="text1">Werewolfs of Miller's Hollow</h1>
     <p id="text2">Welcome to the game!</p>
 
-    <button id="KP" onclick="WitchKill()">Kill postion</button> <!-- hide by default -->
-    <button id="SP" onclick="WitchSave()">Save postion</button> <!-- hide by default -->
+    <button id="KP" onclick="WitchKill()">Kill potion</button> <!-- hide by default -->
+    <button id="SP" onclick="WitchSave()">Save potion</button>
+    <button id="SW" onclick="sleepwalkerkill()">kill</button><!-- hide by default -->
 
     <div id="app" class="container"></div>
     
@@ -43,22 +44,26 @@
     <template id="item_template">
       <div id="{{ name_id }}" class="item" onclick="main(this.id)">
         <p >{{ name }}</p>
+          <div id="{{ name_id }}xx" ></div>
         <p>
           <button class="del_el">Delete</button>
         </p>
+
       </div>
     </template>
 
-    <button onclick="phases()" style="position:absolute;right:0;bottom:0;background-color:orange;">Next</button>
+    <button onclick="phases()" style="position:absolute;bottom:100px;right: 45%;background-color:orange;height: 100px; width: 10%;font-size: larger;">Next</button>
 
 
 <script>
     var x = 0;
     var setup=0;
-    var count=0;
+    var countv=0;
     var hunterkill=0;
+    var white=0;
     $( '#KP' ).hide();
     $( '#SP' ).hide();
+    $( '#SW' ).hide();
 </script>
 
 </body>
